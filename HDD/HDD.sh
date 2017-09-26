@@ -5,4 +5,6 @@ sudo hdparm -I /dev/sda | awk ' /Model Number/ {print}
 								/^\tSupported/ {print}
 								/DMA/ {print}
 								/PIO/ {print}'
-df -h | awk '{print "\t"$1"\t"$2"\t"$3"\t"$4}'
+df -h --total | awk '/Файл.система/{printf "\t%s %s %s %s\n",$1,$2,$3,$4}
+					/total/ {printf "\t%s %11s %6s %12s\n",$1,$2,$3,$4}'
+
