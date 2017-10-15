@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Battery
 {
     class Battery
@@ -12,5 +8,6 @@ namespace Battery
         public int ChargeLevel { get; set; }
         public int TimeToDischarge { get; set; }
         public string Status { get; set; }
+        public int OldScreenTimeToShutdown { get; set; }
     }
 }
