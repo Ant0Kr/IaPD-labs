@@ -15,7 +15,7 @@ namespace USB
     {
         private readonly DeviceController _deviceController = new DeviceController();
         private readonly Printer printer = new Printer();
-        private const int WmDeviceСhange = 0x0219;
+        private const int NativeWmDeviceСhange = 0x0219;
 
         public Form1()
         {
@@ -29,7 +29,7 @@ namespace USB
             {
                 devicesBox.Items.Clear();
                 label2.Text = "";
-                infoLabel.Text = "";
+                infoBox.Text = "";
                 devicesBox.Items.AddRange(printer.GetDevicesList(_deviceController.GetDevices()));
             }
             else
@@ -40,7 +40,7 @@ namespace USB
 
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == WmDeviceСhange)
+            if (m.Msg == NativeWmDeviceСhange)
             {
                 InitDeviceList();
             }
@@ -51,7 +51,7 @@ namespace USB
         {
             string devName = devicesBox.SelectedItems[0].SubItems[0].Text;
             label2.Text = devName + " device info:";
-            infoLabel.Text = printer.PrintVolumes(_deviceController.Devices.FirstOrDefault(p => p.Name == devName));
+            infoBox.Text = printer.PrintVolumes(_deviceController.Devices.FirstOrDefault(p => p.Name == devName));
             ejectBtn.Enabled = true;
         }
 
@@ -61,8 +61,14 @@ namespace USB
             Device device = _deviceController.Devices.FirstOrDefault(p => p.Name == devName);
             if (device?.DeviceType == DeviceType.Generic)
             {
-                _deviceController.EjectDevice(device);
-                label3.Text = "";
+                if(_deviceController.EjectDevice(device))
+                {
+                    label3.Text = "Device busy.";
+                }
+                else
+                {
+                    label3.Text = "";
+                }               
             }
             else
             {

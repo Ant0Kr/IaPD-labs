@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace USB
@@ -26,14 +22,12 @@ namespace USB
             for (int i = 0; i < device.Volumes.Count; i++)
             {
                 volumes += "- - - - - - - - - -\n" +
-                    "\tName:" + device.Volumes[i].Name + "\n" +
-                    "\tTotal: " + device.Volumes[i].Total / BytesInMegabyte + " MB\n" +
-                     "\tFree: " + device.Volumes[i].Free / BytesInMegabyte + " MB\n" +
-                         "\tUsed: " + device.Volumes[i].Used / BytesInMegabyte + " MB\n";
+                    "Name:" + device.Volumes[i].Name + "\n" +
+                    "Total: " + device.Volumes[i].Total / BytesInMegabyte + " MB\n" +
+                     "Free: " + device.Volumes[i].Free / BytesInMegabyte + " MB\n" +
+                         "Used: " + device.Volumes[i].Used / BytesInMegabyte + " MB\n";
             }
-
             return volumes;
-
         }
     }
 }

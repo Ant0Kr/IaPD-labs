@@ -1,4 +1,5 @@
 ﻿using MediaDevices;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,12 +8,7 @@ namespace USB
 {
     public class DeviceController
     {
-        public List<Device> Devices;
-
-        public DeviceController()
-        {
-            Devices = new List<Device>();
-        }
+        public List<Device> Devices = new List<Device>();
 
         public List<Device> GetDevices()
         {
@@ -64,10 +60,12 @@ namespace USB
             return volumes;
         }
 
-        public void EjectDevice(Device device)
+        public bool EjectDevice(Device device)
         {
-            var dev = new VolumeDeviceClass().SingleOrDefault(v => v.LogicalDrive == device.Volumes.First().Name);
+            var dev = new VolumeDeviceClass().SingleOrDefault(p => p.LogicalDrive == device.Volumes.First().Name);
             dev?.Eject(false);
+            var volume = new VolumeDeviceClass();
+            return volume.Where(x => !string.IsNullOrEmpty(x.LogicalDrive)).Any(p => p.LogicalDrive.Equals(dev.LogicalDrive));
         }
     }
 }

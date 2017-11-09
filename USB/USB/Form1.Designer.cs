@@ -32,8 +32,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.ejectBtn = new System.Windows.Forms.Button();
-            this.infoLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.infoBox = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // devicesBox
@@ -67,7 +67,7 @@
             // ejectBtn
             // 
             this.ejectBtn.Enabled = false;
-            this.ejectBtn.Location = new System.Drawing.Point(128, 177);
+            this.ejectBtn.Location = new System.Drawing.Point(12, 177);
             this.ejectBtn.Name = "ejectBtn";
             this.ejectBtn.Size = new System.Drawing.Size(75, 23);
             this.ejectBtn.TabIndex = 4;
@@ -75,29 +75,30 @@
             this.ejectBtn.UseVisualStyleBackColor = true;
             this.ejectBtn.Click += new System.EventHandler(this.ejectBtn_Click);
             // 
-            // infoLabel
-            // 
-            this.infoLabel.AutoSize = true;
-            this.infoLabel.Location = new System.Drawing.Point(221, 32);
-            this.infoLabel.Name = "infoLabel";
-            this.infoLabel.Size = new System.Drawing.Size(0, 13);
-            this.infoLabel.TabIndex = 5;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(221, 187);
+            this.label3.Location = new System.Drawing.Point(93, 182);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(0, 13);
             this.label3.TabIndex = 6;
+            // 
+            // infoBox
+            // 
+            this.infoBox.Location = new System.Drawing.Point(221, 32);
+            this.infoBox.Name = "infoBox";
+            this.infoBox.ReadOnly = true;
+            this.infoBox.Size = new System.Drawing.Size(269, 139);
+            this.infoBox.TabIndex = 7;
+            this.infoBox.Text = "";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(502, 212);
+            this.ClientSize = new System.Drawing.Size(502, 214);
+            this.Controls.Add(this.infoBox);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.infoLabel);
             this.Controls.Add(this.ejectBtn);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -115,8 +116,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button ejectBtn;
-        private System.Windows.Forms.Label infoLabel;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.RichTextBox infoBox;
     }
 }
 
