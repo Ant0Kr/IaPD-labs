@@ -28,35 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.infoBox = new System.Windows.Forms.RichTextBox();
             this.offBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.deviceBox = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
-            // listView1
+            // infoBox
             // 
-            this.listView1.Location = new System.Drawing.Point(12, 36);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(225, 97);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Location = new System.Drawing.Point(243, 36);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(219, 96);
-            this.richTextBox1.TabIndex = 1;
-            this.richTextBox1.Text = "";
+            this.infoBox.Location = new System.Drawing.Point(402, 34);
+            this.infoBox.Name = "infoBox";
+            this.infoBox.ReadOnly = true;
+            this.infoBox.Size = new System.Drawing.Size(369, 328);
+            this.infoBox.TabIndex = 1;
+            this.infoBox.Text = "";
             // 
             // offBtn
             // 
             this.offBtn.Enabled = false;
-            this.offBtn.Location = new System.Drawing.Point(12, 139);
+            this.offBtn.Location = new System.Drawing.Point(12, 368);
             this.offBtn.Name = "offBtn";
             this.offBtn.Size = new System.Drawing.Size(88, 23);
             this.offBtn.TabIndex = 2;
@@ -84,23 +76,36 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(243, 17);
+            this.label3.Location = new System.Drawing.Point(399, 18);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(64, 13);
             this.label3.TabIndex = 5;
             this.label3.Text = "Device info:";
             // 
+            // deviceBox
+            // 
+            this.deviceBox.FullRowSelect = true;
+            this.deviceBox.Location = new System.Drawing.Point(16, 34);
+            this.deviceBox.MultiSelect = false;
+            this.deviceBox.Name = "deviceBox";
+            this.deviceBox.Size = new System.Drawing.Size(380, 328);
+            this.deviceBox.TabIndex = 6;
+            this.deviceBox.TileSize = new System.Drawing.Size(350, 30);
+            this.deviceBox.UseCompatibleStateImageBehavior = false;
+            this.deviceBox.View = System.Windows.Forms.View.Tile;
+            this.deviceBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.deviceBox_MouseClick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(482, 174);
+            this.ClientSize = new System.Drawing.Size(783, 403);
+            this.Controls.Add(this.deviceBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.offBtn);
-            this.Controls.Add(this.richTextBox1);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.infoBox);
             this.Name = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -108,13 +113,12 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox infoBox;
         private System.Windows.Forms.Button offBtn;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ListView deviceBox;
     }
 }
 
