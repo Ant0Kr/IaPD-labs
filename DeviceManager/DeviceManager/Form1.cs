@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DeviceManager
@@ -14,6 +8,8 @@ namespace DeviceManager
     {
         private readonly DeviceController _deviceController = new DeviceController();
         private readonly Printer _printer = new Printer();
+        private const string SwitchOff = "Switch off";
+        private const string TurnOn = "Turn on";
 
         public Form1()
         {
@@ -28,9 +24,9 @@ namespace DeviceManager
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string devName = deviceBox.SelectedItems[0].SubItems[0].Text;
-            Device device = _deviceController.Devices.FirstOrDefault(p => p.Name == devName);
-            if (device.State)
+            var devName = deviceBox.SelectedItems[0].SubItems[0].Text;
+            var device = _deviceController.Devices.FirstOrDefault(p => p.Name == devName);
+            if (device != null && device.State)
             {
                 _deviceController.DisableDevice(device);
             }
@@ -38,18 +34,21 @@ namespace DeviceManager
             {
                 _deviceController.EnableDevice(device);
             }
-            device.State = !device.State;
-            offBtn.Text = device.State ? "Switch off" : "Turn on";
+            if (device != null)
+            {
+                device.State = !device.State;
+                offBtn.Text = device.State ? SwitchOff : TurnOn;
+            }
             offBtn.Enabled = false;
         }
 
         private void deviceBox_MouseClick(object sender, MouseEventArgs e)
         {
-            string devName = deviceBox.SelectedItems[0].SubItems[0].Text;
-            label3.Text = devName + ":";
-            Device device = _deviceController.Devices.FirstOrDefault(p => p.Name == devName);
+            var devName = deviceBox.SelectedItems[0].SubItems[0].Text;
+            label3.Text = $@"{devName}:";
+            var device = _deviceController.Devices.FirstOrDefault(p => p.Name == devName);
             infoBox.Text = _printer.PrintDeviceInfo(device);
-            offBtn.Text = device.State ? "Switch off" : "Turn on";
+            offBtn.Text = device != null && device.State ? SwitchOff : TurnOn;
             offBtn.Enabled = true;
         }
     }

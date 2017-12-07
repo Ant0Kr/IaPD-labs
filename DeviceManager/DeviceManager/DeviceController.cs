@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Management;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DeviceManager
 {
-    class DeviceController
+    public class DeviceController
     {
         private const string SelectRequest = "SELECT * FROM Win32_PNPEntity";
         public List<Device> Devices;
@@ -16,10 +13,11 @@ namespace DeviceManager
         {
             Devices = new List<Device>();
             var devices = new ManagementObjectSearcher(SelectRequest);
-            
-            foreach (ManagementObject device in devices.Get())
+
+            foreach (var o in devices.Get())
             {
-                List<SysFile> sysFiles = new List<SysFile>();
+                var device = (ManagementObject)o;
+                var sysFiles = new List<SysFile>();
                 foreach (var sys in device.GetRelated("Win32_SystemDriver"))
                 {
                     sysFiles.Add(new SysFile()
@@ -30,31 +28,31 @@ namespace DeviceManager
                 }
                 Devices.Add(new Device
                 {
-                    Name = device["Name"] != null ? device["Name"].ToString() : "",
-                    ClassGuid = device["ClassGuid"] != null ? device["ClassGuid"].ToString() : "",
-                    HardwareID = device["HardwareID"] != null ? (string[])device["HardwareID"] : null,
-                    Manufacturer = device["Manufacturer"] != null ? device["Manufacturer"].ToString() : "",
-                    DeviceID = device["DeviceID"] != null ? device["DeviceID"].ToString() : "",
+                    Name = device["Name"]?.ToString() ?? "",
+                    ClassGuid = device["ClassGuid"]?.ToString() ?? "",
+                    HardwareId = (string[])device["HardwareID"],
+                    Manufacturer = device["Manufacturer"]?.ToString() ?? "",
+                    DeviceId = device["DeviceID"]?.ToString() ?? "",
                     SysFiles = sysFiles,
                     State = device["Status"].ToString() == "OK"
                 });
             }
         }
 
-        public void DisableDevice(Device _device)
+        public void DisableDevice(Device device)
         {
-            var device = new ManagementObjectSearcher(SelectRequest).Get()
+            var localDevice = new ManagementObjectSearcher(SelectRequest).Get()
                 .OfType<ManagementObject>()
-                .FirstOrDefault(x => x.Properties["DeviceID"].Value.ToString().Equals(_device.DeviceID));
-                device.InvokeMethod("Disable", new object[] { false });
+                .FirstOrDefault(x => x.Properties["DeviceID"].Value.ToString().Equals(device.DeviceId));
+                localDevice?.InvokeMethod("Disable", new object[] { false });
         }
 
-        public void EnableDevice(Device _device)
+        public void EnableDevice(Device device)
         {
-            var device = new ManagementObjectSearcher(SelectRequest).Get()
+            var localDevice = new ManagementObjectSearcher(SelectRequest).Get()
                  .OfType<ManagementObject>()
-                 .FirstOrDefault(x => x["DeviceID"].ToString().Equals(_device.DeviceID));
-                device.InvokeMethod("Enable", new object[] { false });
+                 .FirstOrDefault(x => x["DeviceID"].ToString().Equals(device.DeviceId));
+            localDevice?.InvokeMethod("Enable", new object[] { false });
         }
     }
 }

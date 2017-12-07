@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Management;
 using System.Windows.Forms;
 namespace DeviceManager
 {
