@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Wireless
@@ -15,6 +9,10 @@ namespace Wireless
     {
         private readonly WifiController _wifiController = new WifiController();
         private readonly Thread _scannerThread;
+        private const string SsidColumn = "SSID";
+        private const string SignalQualityColumn = "SignalQuality";
+        private const string BssidColumn = "BSSID";
+        private const string AuthTypeColumn = "AuthType";
 
         public Form1()
         {
@@ -33,10 +31,10 @@ namespace Wireless
                 foreach (var network in networks)
                 {
                     var row = dataGridView1.Rows.Add();
-                    dataGridView1["SSID", row].Value = network.Ssid;
-                    dataGridView1["SignalQuality", row].Value = network.SignalQuality;
-                    dataGridView1["BSSID", row].Value = string.Join("", network.Bssids);
-                    dataGridView1["AuthType", row].Value = network.AuthType;
+                    dataGridView1[SsidColumn, row].Value = network.Ssid;
+                    dataGridView1[SignalQualityColumn, row].Value = network.SignalQuality;
+                    dataGridView1[BssidColumn, row].Value = string.Join("", network.Bssids);
+                    dataGridView1[AuthTypeColumn, row].Value = network.AuthType;
                 }
             }
             else
@@ -48,20 +46,15 @@ namespace Wireless
         private void button1_Click(object sender, EventArgs e)
         {
             string authType = null;
-            for (int i = 0; i < dataGridView1.RowCount; i++)
+            for (var i = 0; i < dataGridView1.RowCount; i++)
             {
-                if (dataGridView1["SSID", i].Value.ToString() == textBox1.Text)
-                {
-                    authType = dataGridView1["AuthType", i].Value.ToString();
-                    break;
-                }
+                if (dataGridView1[SsidColumn, i].Value.ToString() != textBox1.Text) continue;
+                authType = dataGridView1[AuthTypeColumn, i].Value.ToString();
+                break;
             }
-            if (authType != null)
-            {
-                var accessPoint = _wifiController.GetAccessPoint(textBox1.Text, authType);
-                _wifiController.ConnectToNetwork(accessPoint, textBox2.Text);
-            }
-
+            if (authType == null) return;
+            var accessPoint = _wifiController.GetAccessPoint(textBox1.Text, authType);
+            _wifiController.ConnectToNetwork(accessPoint, textBox2.Text);
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)

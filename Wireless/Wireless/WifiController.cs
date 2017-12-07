@@ -54,7 +54,7 @@ namespace Wireless
             }
         }
 
-        private Dot11AuthAlgorithm GetAuthType(AccessPoint accessPoint)
+        private static Dot11AuthAlgorithm GetAuthType(AccessPoint accessPoint)
         {
             return ((WlanAvailableNetwork)accessPoint?.GetType()
                 .GetProperty("Network", BindingFlags.NonPublic | BindingFlags.Instance)
@@ -69,17 +69,17 @@ namespace Wireless
                 .Select(x => Dot11BssidToString(x.dot11Bssid)).ToList();
         }
 
-        private string Dot11SsidToString(Dot11Ssid ssid)
+        private static string Dot11SsidToString(Dot11Ssid ssid)
         {
             return Encoding.ASCII.GetString(ssid.SSID, 0, (int)ssid.SSIDLength);
         }
 
-        private string Dot11BssidToString(byte[] dot11Bssid)
+        private static string Dot11BssidToString(byte[] dot11Bssid)
         {
-            byte[] macAddress = dot11Bssid;
+            var macAddress = dot11Bssid;
             var macAddressLength = (uint)macAddress.Length;
             var str = new string[(int)macAddressLength];
-            for (int i = 0; i < macAddressLength; i++)
+            for (var i = 0; i < macAddressLength; i++)
             {
                 str[i] = macAddress[i].ToString("x2");
             }
