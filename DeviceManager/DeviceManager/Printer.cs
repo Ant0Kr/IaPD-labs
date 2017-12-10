@@ -20,7 +20,7 @@ namespace DeviceManager
         {
             var info = $"GUID: {device.ClassGuid}\n\n" +
                        $"Manufacturer: {device.Manufacturer}\n\n" +
-                       $"nDeviceID: {device.DeviceId}";
+                       $"DeviceID: {device.DeviceId}";
             if (device.HardwareId != null)
             {
                 info += "\n\nHardwareID: ";

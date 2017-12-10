@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BurnCD.Properties
+namespace CDBurn.Properties
 {
 
 

@@ -242,8 +242,7 @@ namespace IMAPI2
                     image.MultisessionInterfaces = format.MultisessionInterfaces;
                     image.ImportFileSystem();
                 }
-
-                _mediaCapacity = 2048 * image.FreeMediaBlocks;
+                _mediaCapacity = 2048 * (long)image.FreeMediaBlocks;
                 _mediaLoaded = true;
             }
             finally

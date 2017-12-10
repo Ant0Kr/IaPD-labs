@@ -20,7 +20,7 @@ namespace IMAPI2
                 if ((_selectedIndex > (this.Count-1)) || (_selectedIndex < -1))
                     throw new IndexOutOfRangeException("SelectedIndex must be in range (this.Count = " + this.Count.ToString() + ").");
                 _selectedIndex = value;
-                SelectedIndexChanged(this, new EventArgs());
+                SelectedIndexChanged?.Invoke(this, new EventArgs());
             }
         }
         public T SelectedItem

@@ -28,11 +28,11 @@ namespace DeviceManager
             var device = _deviceController.Devices.FirstOrDefault(p => p.Name == devName);
             if (device != null && device.State)
             {
-                _deviceController.DisableDevice(device);
+                _deviceController.SetDeviceState(device,"Disable");
             }
             else
             {
-                _deviceController.EnableDevice(device);
+                _deviceController.SetDeviceState(device,"Enable");
             }
             if (device != null)
             {

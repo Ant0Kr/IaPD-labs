@@ -7,6 +7,7 @@ namespace DeviceManager
     public class DeviceController
     {
         private const string SelectRequest = "SELECT * FROM Win32_PNPEntity";
+        private const string SystemDriver = "Win32_SystemDriver";
         public List<Device> Devices;
 
         public DeviceController()
@@ -18,9 +19,9 @@ namespace DeviceManager
             {
                 var device = (ManagementObject)o;
                 var sysFiles = new List<SysFile>();
-                foreach (var sys in device.GetRelated("Win32_SystemDriver"))
+                foreach (var sys in device.GetRelated(SystemDriver))
                 {
-                    sysFiles.Add(new SysFile()
+                    sysFiles.Add(new SysFile
                     {
                         PathName = sys["PathName"]?.ToString(),
                         Description = sys["Description"]?.ToString()
@@ -39,20 +40,12 @@ namespace DeviceManager
             }
         }
 
-        public void DisableDevice(Device device)
+        public void SetDeviceState(Device device, string state)
         {
             var localDevice = new ManagementObjectSearcher(SelectRequest).Get()
                 .OfType<ManagementObject>()
                 .FirstOrDefault(x => x.Properties["DeviceID"].Value.ToString().Equals(device.DeviceId));
-                localDevice?.InvokeMethod("Disable", new object[] { false });
-        }
-
-        public void EnableDevice(Device device)
-        {
-            var localDevice = new ManagementObjectSearcher(SelectRequest).Get()
-                 .OfType<ManagementObject>()
-                 .FirstOrDefault(x => x["DeviceID"].ToString().Equals(device.DeviceId));
-            localDevice?.InvokeMethod("Enable", new object[] { false });
+            localDevice?.InvokeMethod(state, new object[] { false });
         }
     }
 }
