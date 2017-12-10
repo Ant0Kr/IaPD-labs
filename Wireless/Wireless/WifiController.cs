@@ -23,6 +23,8 @@ namespace Wireless
         public event ScanNetworksHandler InitializeTable;
         public event PingHostHandler DisplayPing;
 
+        private const int Delay = 5000;
+
         public void Scan()
         {
             while (true)
@@ -50,7 +52,7 @@ namespace Wireless
                     InitializeTable?.Invoke(new List<WifiModel>());
                 }
                 InitializeTable?.Invoke(_networks);
-                Thread.Sleep(5000);
+                Thread.Sleep(Delay);
             }
         }
 

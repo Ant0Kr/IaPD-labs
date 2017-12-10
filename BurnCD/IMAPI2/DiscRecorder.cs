@@ -19,6 +19,8 @@ namespace IMAPI2
         {
             get { return _profiles; }
         }
+        public string VolumePath { get; }
+        public string RecorderId { get; }
 
         internal DiscRecorder(string uniqueId)
         {
@@ -36,6 +38,11 @@ namespace IMAPI2
                     profiles.Add((MediaProfile)item);
                 }
                 _profiles = profiles.AsReadOnly();
+
+                VolumePath = recorder.VolumePathNames.Length > 0
+                    ? recorder.VolumePathNames.GetValue(0).ToString()
+                    : string.Empty;
+                RecorderId = recorder.ProductId;
             }
             finally
             {
