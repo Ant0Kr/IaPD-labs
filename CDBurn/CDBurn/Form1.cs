@@ -39,7 +39,7 @@ namespace CDBurn
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (_burnController.DiscAvailable())
+                if (_burnController.IsDiscAvailable())
                 {
                     foreach (var filePath in openFileDialog.FileNames)
                     {
@@ -123,7 +123,7 @@ namespace CDBurn
 
         private void BurnButtonClick(object sender, EventArgs e)
         {
-            if (_burnController.DiscAvailable())
+            if (_burnController.IsDiscAvailable())
             {
                 _burnController.PrepareFilesToBurn(filesListBox.Items.OfType<FileNode>().ToList());
                 Hide();
